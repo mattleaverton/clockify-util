@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clockify</title>
+</head>
+<style>
+.project-button-group {
+    display: flex;
+}
+.project-button {
+    width: 450px;
+    height: 300px;
+}
+.project-name {
+    display: block;
+    font-weight: bold;
+    font-size: 1.5em;
+    padding: 10px;
+}
+.project-client {
+    font-size: 1.5em;
+}
+</style>
+<body>
+<div class="project-button-group">
+<ul>
+    {% for project in projects %}
+        <button class="project-button" onclick="submit('{{ project['key'] }}')">
+            <span class="project-name">{{ project['name'] }}</span>
+            <span class="project-client">{{ project['client'] }}</span>
+        </button>
+    {% end %}
+</ul>
+</div>
+</body>
+<script>
+function submit(project) {
+  console.log(project);
+  fetch(window.location.href, {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({project: project})
+  })
+}
+</script>
+</html>
